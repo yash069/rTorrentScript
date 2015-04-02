@@ -7,23 +7,23 @@ REALM="Authorized users only"
 
 if [ "$#" -ne 2 ]; then
 	echo "Usage: $0 username drive"
-	exit
-done
+	exit 1
+fi
 
 if [ ! -b "$2" ]; then
 	echo "Requires drive name!"
-	exit
-done
+	exit 1
+fi
 
 if [ -d "/home/$1" ]; then
 	echo "User $1 already exists"
-	exit
-done
+	exit 1
+fi
 
 echo -n "Creating Partition..."
 echo -e "o\nn\np\n1\n\n\nw" | sudo fdisk $2
-mke2fs -t ext4 $2
-echo "$2 /home/$1 ext4 defaults 0 0" >> /etc/fstab
+mke2fs -t ext4 $2"1"
+echo $2"1 /home/$1 ext4 defaults 0 0" >> /etc/fstab
 mkdir /home/$1
 mount -a
 echo "Done"

@@ -30,17 +30,17 @@ spinner(){
 }
 
 update_apt(){
-	apt-get update > /dev/null
+	apt-get update &>> /dev/null
 }
 
 install_php(){
-	apt-get -y install php5-cli php5-fpm php5-curl > /dev/null
+	apt-get -y install php5-cli php5-fpm php5-curl &>> /dev/null
 	sed -i "s/;cgi.fix_pathinfo=0/cgi.fix_pathinfo=1/g" /etc/php5/fpm/php.ini
 	sed -i "s/expose_php = On/expose_php = Off/g" /etc/php5/fpm/php.ini
 }
 
 install_lighttpd(){
-	apt-get -y install lighttpd > /dev/null
+	apt-get -y install lighttpd &>> /dev/null
 	cp /etc/lighttpd/conf-available/15-fastcgi-php.conf /etc/lighttpd/conf-available/15-fastcgi-php-spawnfcgi.conf
 	sed -i '/"bin-path" => "\/usr\/bin\/php-cgi",/d' /etc/lighttpd/conf-available/15-fastcgi-php.conf
 	sed -i 's/lighttpd\/php.socket/php5-fpm.sock/g' /etc/lighttpd/conf-available/15-fastcgi-php.conf
@@ -86,7 +86,7 @@ download_package(){
 }
 
 install_depends(){
-	apt-get -y install zip libav-tools mediainfo subversion &> /dev/null
+	apt-get -y install zip libav-tools mediainfo subversion &>> /dev/null
 	ln -s /usr/bin/avconv /usr/bin/ffmpeg
 	tar -xf $work_dir/rarlinux-x64-5.2.1.tar.gz -C /usr/local/bin --overwrite --strip-components 1 rar/rar rar/unrar
 }
@@ -102,7 +102,7 @@ install_rutorrent(){
 	tar -xf $work_dir/rutorrent-3.6.tar.gz -C /var/www/
 	tar -xf $work_dir/plugins-3.6.tar.gz -C /var/www/rutorrent
 	svn -q co http://svn.rutorrent.org/svn/filemanager/trunk/filemanager/ /var/www/rutorrent/filemanager/
-	cat >> /var/www/rutorrent/filemanager/conf.php <<END
+	cat > /var/www/rutorrent/filemanager/conf.php <<END
 <?php
 $fm['tempdir'] = '/tmp'; // path were to store temporary data ; must be writable
 $fm['mkdperm'] = 755; // default permission to set to new created directories
@@ -123,8 +123,8 @@ END
 }
 
 install_vsftpd(){
-	apt-get -y install vsftpd > /dev/null
-	cat >> /etc/vsftpd.conf <<END
+	apt-get -y install vsftpd &>> /dev/null
+	cat > /etc/vsftpd.conf <<END
 listen=YES
 listen_ipv6=NO
 anonymous_enable=NO
