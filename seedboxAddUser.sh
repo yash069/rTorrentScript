@@ -30,7 +30,7 @@ echo "Done"
 
 echo -n "Creating local user..."
 password=`tr -cd '[:alnum:]' < /dev/urandom | fold -w10 | head -1`
-useradd -d /home/$1 -s /bin/bash -p $(openssl passwd -1 password) $1
+useradd -d /home/$1 -s /bin/bash -p $(openssl passwd -1 $password) $1
 echo "Done"
 
 echo -n "Creating user directories..."
