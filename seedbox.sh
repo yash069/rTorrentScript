@@ -101,8 +101,8 @@ install_rtorrent(){
 install_rutorrent(){
 	tar -xf $work_dir/rutorrent-3.6.tar.gz -C /var/www/
 	tar -xf $work_dir/plugins-3.6.tar.gz -C /var/www/rutorrent
-	svn -q co http://svn.rutorrent.org/svn/filemanager/trunk/filemanager/ /var/www/rutorrent/filemanager/
-	cat > /var/www/rutorrent/filemanager/conf.php <<END
+	svn -q co http://svn.rutorrent.org/svn/filemanager/trunk/filemanager/ /var/www/rutorrent/plugins/filemanager/
+	cat > /var/www/rutorrent/plugins/filemanager/conf.php <<END
 <?php
 $fm['tempdir'] = '/tmp'; // path were to store temporary data ; must be writable
 $fm['mkdperm'] = 755; // default permission to set to new created directories
